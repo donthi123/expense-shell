@@ -24,7 +24,6 @@ id expense &>>$LOG
 if [ $? -ne 0 ]; then
   useradd expense &>>$LOG
 fi
-useradd expense &>>$LOG
 check_status $?
 
 print_Task_Heading "Copy Backend Service file"
