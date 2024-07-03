@@ -20,6 +20,11 @@ dnf install nodejs -y &>>$LOG
 check_status $?
 
 print_Task_Heading "Adding Application User"
+id expense &>>$LOG
+if [ $? -ne 0 ]; then
+  useradd expense &>>$LOG
+
+fi
 useradd expense &>>$LOG
 check_status $?
 
@@ -49,14 +54,17 @@ print_Task_Heading "Download NodeJS Dependencies"
 cd /app &>>$LOG
 npm install &>>$LOG
 check_status $?
+
 print_Task_Heading "start Backend Service"
 systemctl daemon-reload &>>$LOG
 systemctl enable backend &>>$LOG
 systemctl start backend &>>$LOG
 check_status $?
+
 print_Task_Heading "Install MySQL Client"
 dnf install mysql -y &>>$LOG
 check_status $?
+
 print_Task_Heading "Load Schema"
 mysql -h 172.31.82.154 -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOG
 check_status $?
