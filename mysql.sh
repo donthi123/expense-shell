@@ -13,5 +13,9 @@ systemctl start mysqld &>>$LOG
 Check_Status $?
 
 print_Task_Heading "setup MySQL password"
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG
+echo 'show databases' |mysql -h 172.31.82.154 -uroot -p${mysql_root_password} &>>$LOG
+if [ $? -ne 0 ]; then
+    mysql_secure_installation --set-root-pass {mysql_root_password} &>>$LOG
+fi
+
 Check_Status $?
