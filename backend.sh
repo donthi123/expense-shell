@@ -29,11 +29,11 @@ cp backend.service /etc/systemd/system/backend.service &>>$LOG
 check_status $?
 
 print_Task_Heading "Clean the old Content"
-rm -rf /app $LOG
+rm -rf /app &>>$LOG
 check_status $?
 
 print_Task_Heading "Create App Directory"
-mkdir /app $LOG
+mkdir /app &>>$LOG
 check_status $?
 
 print_Task_Heading "Download App Content"
