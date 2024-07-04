@@ -25,29 +25,15 @@ if [ $? -ne 0 ]; then
   useradd expense &>>$LOG
 fi
 check_status $?
+app_dir=/app
+component=backend
 
 print_Task_Heading "Copy Backend Service file"
 
 cp backend.service /etc/systemd/system/backend.service &>>$LOG
 check_status $?
 
-print_Task_Heading "Clean the old Content"
-rm -rf /app &>>$LOG
-check_status $?
-
-print_Task_Heading "Create App Directory"
-mkdir /app &>>$LOG
-check_status $?
-
-print_Task_Heading "Download App Content"
-curl -o /tmp/backend.zip https://expense-artifacts.s3.amazonaws.com/expense-backend-v2.zip &>>$LOG
-check_status $?
-
-print_Task_Heading "Extract App Content"
-cd /app &>>$LOG
-unzip /tmp/backend.zip &>>$LOG
-check_status $?
-
+App_PreReq
 print_Task_Heading "Download NodeJS Dependencies"
 cd /app &>>$LOG
 npm install &>>$LOG
